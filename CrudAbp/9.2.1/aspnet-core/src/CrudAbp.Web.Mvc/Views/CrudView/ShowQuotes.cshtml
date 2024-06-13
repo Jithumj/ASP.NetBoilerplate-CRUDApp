@@ -1,0 +1,37 @@
+﻿@model List<CrudAbp.CrudTable.Dto.CrudTableDto>
+@{
+    ViewData["Title"] = "ShowQuotes";
+}
+@section scripts
+{
+    <script src="~/wwwroot/view-resources/Views/CrudView/Delete.js"></script>
+}
+
+<h1>Quotes!</h1>
+<a href="@Url.Action("Index", "CrudView")" style="margin-left:10px;">Add more Quotes!</a>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Your Quotes!</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var CrudTable in Model)
+        {
+            <tr>
+                <td>@CrudTable.Name</td>
+                <td>@CrudTable.Quote</td>
+                <td>Action</td>
+                <td>
+                    <a href="@Url.Action("UpdateQuotes", new { id = CrudTable.Id })" class="btn btn-primary">Edit</a>
+                    <form action="@Url.Action("DeleteQuotes", new { id =CrudTable.Id })" method="post" style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger" onclick="deleteQuote(@CrudTable.Id);">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
